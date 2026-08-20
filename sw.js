@@ -1,29 +1,5 @@
-const CACHE = "mesaflow-v5";
-const ASSETS = [
-  "./",
-  "./index.html",
-  "./styles.css",
-  "./v2.css",
-  "./management.css",
-  "./js/config.js",
-  "./js/app.js",
-  "./js/v2.js",
-  "./js/management.js",
-  "./assets/grao-icon.svg",
-  "./manifest.webmanifest"
-];
-self.addEventListener("install", event => {
-  self.skipWaiting();
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
-});
-self.addEventListener("activate", event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
-});
-self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") return;
-  event.respondWith(fetch(event.request).then(response => {
-    const copy = response.clone();
-    caches.open(CACHE).then(cache => cache.put(event.request, copy));
-    return response;
-  }).catch(() => caches.match(event.request)));
-});
+const CACHE='mesaflow-v6';
+const ASSETS=['./','./index.html','./styles.css?v=6','./js/config.js?v=6','./js/boot-v6.js?v=6','./v6.css.gz.b64?v=6','./js/app-v6.js.gz.b64?v=6','./manifest.webmanifest','./assets/grao-logo.svg'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();if(new URL(e.request.url).origin===location.origin)caches.open(CACHE).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request)))});
