@@ -10,7 +10,7 @@
     return await new Response(new Blob([bytes]).stream().pipeThrough(ds)).text();
   }
   try{
-    const [css,js]=await Promise.all([unpackB64('v6.css.gz.b64?v=6'),unpackB64('js/app-v6.js.gz.b64?v=6')]);
+    const [css,js]=await Promise.all([unpackB64('v6.css.gz.b64?v=7'),unpackB64('js/app-v6.js.gz.b64?v=7')]);
     const style=document.createElement('style');style.textContent=css;document.head.appendChild(style);
     (0,eval)(js+'\n//# sourceURL=app-v6.js');
   }catch(err){
