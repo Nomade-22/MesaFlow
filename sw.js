@@ -1,5 +1,17 @@
-const CACHE = "mesaflow-v3";
-const ASSETS = ["./", "./index.html", "./styles.css", "./js/config.js", "./js/app.js", "./manifest.webmanifest"];
+const CACHE = "mesaflow-v5";
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./styles.css",
+  "./v2.css",
+  "./management.css",
+  "./js/config.js",
+  "./js/app.js",
+  "./js/v2.js",
+  "./js/management.js",
+  "./assets/grao-icon.svg",
+  "./manifest.webmanifest"
+];
 self.addEventListener("install", event => {
   self.skipWaiting();
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));
