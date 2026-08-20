@@ -1,0 +1,68 @@
+name: Build MesaFlow V8 assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'js/app-v6.js.gz.b64'
+      - 'v6.css.gz.b64'
+      - '.github/workflows/build-v8.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode normal JS and CSS
+        shell: bash
+        run: |
+          base64 -d js/app-v6.js.gz.b64 | gzip -dc > js/app-v8.js
+          base64 -d v6.css.gz.b64 | gzip -dc > v8.css
+          node --check js/app-v8.js
+      - name: Publish direct-loading page
+        shell: bash
+        run: |
+          cat > index.html <<'EOF'
+          <!doctype html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+            <meta name="theme-color" content="#074A43" />
+            <meta name="description" content="MesaFlow — cardápio digital, comanda, garçom e copa para pequenos restaurantes." />
+            <title>MesaFlow</title>
+            <link rel="manifest" href="manifest.webmanifest" />
+            <link rel="stylesheet" href="v8.css?v=9" />
+          </head>
+          <body>
+            <div id="mf-root"></div>
+            <div id="mf-toast" class="toast" role="status" aria-live="polite"></div>
+            <dialog id="mf-dialog" class="dialog mf-dialog"><div id="mf-dialog-body"></div></dialog>
+            <script src="js/config.js?v=9"></script>
+            <script src="js/app-v8.js?v=9"></script>
+          </body>
+          </html>
+          EOF
+          cat > sw.js <<'EOF'
+          const CACHE='mesaflow-v9';
+          const ASSETS=['./','./index.html','./v8.css?v=9','./js/config.js?v=9','./js/app-v8.js?v=9','./manifest.webmanifest','./assets/grao-logo.svg'];
+          self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))});
+          self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+          self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();if(new URL(e.request.url).origin===location.origin)caches.open(CACHE).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request)))});
+          EOF
+      - name: Commit generated files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html sw.js js/app-v8.js v8.css
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "V9: publicar JS e CSS normais"
+            git push
+          fi
