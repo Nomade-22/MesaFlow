@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#18181b" />
-  <meta name="description" content="MesaFlow — cardápio digital, comanda e pedidos para pequenos bares e restaurantes." />
-  <title>MesaFlow — Cardápio & Pedidos</title>
+  <meta name="theme-color" content="#074A43" />
+  <meta name="description" content="Grão de Mostarda no MesaFlow — cardápio digital, pedidos por QR Code e atendimento rápido." />
+  <title>Grão de Mostarda — MesaFlow</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="MesaFlow início">
-        <span class="brand-mark"><img id="brand-logo" alt="" /></span>
+      <a class="brand" href="#" aria-label="Grão de Mostarda início">
+        <span class="brand-mark"><img id="brand-logo" src="assets/grao-icon.png" alt="Grão de Mostarda" /></span>
         <span>
-          <strong id="brand-name">MesaFlow</strong>
-          <small id="brand-subtitle">Bar & Restaurante</small>
+          <strong id="brand-name">Grão de Mostarda</strong>
+          <small id="brand-subtitle">Restaurante</small>
         </span>
       </a>
       <div class="top-actions">
@@ -76,20 +76,17 @@
   </dialog>
 
   <script>
-    // Modo de demonstração: quando a página é aberta sem QR, usa a Mesa 1.
     if (!new URLSearchParams(location.search).get("mesa")) {
       const url = new URL(location.href);
       url.searchParams.set("mesa", "1");
       history.replaceState(null, "", url);
     }
-    // Atualiza dados visuais quando houver uma nova versão do cardápio.
-    if (localStorage.getItem("mesaflow:data-version") !== "3") {
+    if (localStorage.getItem("mesaflow:data-version") !== "4") {
       localStorage.removeItem("mesaflow:products");
-      localStorage.setItem("mesaflow:data-version", "3");
+      localStorage.setItem("mesaflow:data-version", "4");
     }
   </script>
-  <script src="js/config.js?v=3"></script>
-  <script src="js/app.js?v=3"></script>
-  <!-- deploy trigger 2026-08-20 -->
+  <script src="js/config.js?v=4"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>
