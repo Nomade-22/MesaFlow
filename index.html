@@ -7,14 +7,15 @@
   <meta name="description" content="Grão de Mostarda no MesaFlow — cardápio digital, pedidos por QR Code e atendimento rápido." />
   <title>Grão de Mostarda — MesaFlow</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css?v=4" />
-  <link rel="stylesheet" href="v2.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="v2.css?v=5" />
+  <link rel="stylesheet" href="management.css?v=5" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#" aria-label="Grão de Mostarda início">
-        <span class="brand-mark"><img id="brand-logo" src="assets/grao-icon.png" alt="Grão de Mostarda" /></span>
+        <span class="brand-mark"><img id="brand-logo" src="assets/grao-icon.svg" alt="Grão de Mostarda" /></span>
         <span>
           <strong id="brand-name">Grão de Mostarda</strong>
           <small id="brand-subtitle">Restaurante</small>
@@ -30,6 +31,7 @@
       <button class="role-tab is-active" data-role="cliente" type="button">Cliente</button>
       <button class="role-tab" data-role="garcom" type="button">Garçom</button>
       <button class="role-tab" data-role="copa" type="button">Copa</button>
+      <button class="role-tab" data-role="gerenciamento" type="button">Gerenciamento</button>
       <button class="role-tab" data-role="admin" type="button">Admin</button>
     </nav>
 
@@ -82,13 +84,15 @@
       url.searchParams.set("mesa", "1");
       history.replaceState(null, "", url);
     }
-    if (localStorage.getItem("mesaflow:data-version") !== "4") {
+    if (localStorage.getItem("mesaflow:data-version") !== "5") {
       localStorage.removeItem("mesaflow:products");
-      localStorage.setItem("mesaflow:data-version", "4");
+      localStorage.setItem("mesaflow:data-version", "5");
     }
   </script>
-  <script src="js/config.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
-  <script src="js/v2.js?v=4"></script>
+  <script src="js/config.js?v=5"></script>
+  <script>window.MESAFLOW_CONFIG.restaurant.logo="assets/grao-icon.svg";</script>
+  <script src="js/app.js?v=5"></script>
+  <script src="js/v2.js?v=5"></script>
+  <script src="js/management.js?v=5"></script>
 </body>
 </html>
