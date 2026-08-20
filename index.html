@@ -4,95 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#074A43" />
-  <meta name="description" content="Grão de Mostarda no MesaFlow — cardápio digital, pedidos por QR Code e atendimento rápido." />
-  <title>Grão de Mostarda — MesaFlow</title>
+  <meta name="description" content="MesaFlow — cardápio digital, comanda, garçom e copa para pequenos restaurantes." />
+  <title>MesaFlow</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css?v=5" />
-  <link rel="stylesheet" href="v2.css?v=5" />
-  <link rel="stylesheet" href="management.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="#" aria-label="Grão de Mostarda início">
-        <span class="brand-mark"><img id="brand-logo" src="assets/grao-icon.svg" alt="Grão de Mostarda" /></span>
-        <span>
-          <strong id="brand-name">Grão de Mostarda</strong>
-          <small id="brand-subtitle">Restaurante</small>
-        </span>
-      </a>
-      <div class="top-actions">
-        <span class="table-pill" id="table-pill" hidden>Mesa <b id="current-table-label">—</b></span>
-        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Alternar tema">☾</button>
-      </div>
-    </header>
-
-    <nav class="role-nav" aria-label="Área do sistema">
-      <button class="role-tab is-active" data-role="cliente" type="button">Cliente</button>
-      <button class="role-tab" data-role="garcom" type="button">Garçom</button>
-      <button class="role-tab" data-role="copa" type="button">Copa</button>
-      <button class="role-tab" data-role="gerenciamento" type="button">Gerenciamento</button>
-      <button class="role-tab" data-role="admin" type="button">Admin</button>
-    </nav>
-
-    <main id="app" class="main-content" aria-live="polite"></main>
-  </div>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <dialog id="product-dialog" class="dialog">
-    <form method="dialog" class="dialog-panel" id="product-form">
-      <button class="dialog-close" value="cancel" aria-label="Fechar" type="submit">×</button>
-      <div class="dialog-product-image" id="dialog-product-image"></div>
-      <div class="dialog-content">
-        <div class="eyebrow" id="dialog-category"></div>
-        <h2 id="dialog-title">Produto</h2>
-        <p id="dialog-description"></p>
-        <div class="dialog-price" id="dialog-price"></div>
-        <div id="modifier-groups" class="modifier-groups"></div>
-        <label class="field-label" for="item-note">Observação</label>
-        <input id="item-note" class="text-input" type="text" maxlength="80" placeholder="Ex.: pouco gelo" />
-        <div class="quantity-row">
-          <span>Quantidade</span>
-          <div class="stepper">
-            <button type="button" id="qty-minus">−</button>
-            <strong id="qty-value">1</strong>
-            <button type="button" id="qty-plus">+</button>
-          </div>
-        </div>
-        <button type="button" class="primary-btn full" id="add-to-cart">Adicionar ao pedido</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="cart-dialog" class="dialog">
-    <div class="dialog-panel cart-panel">
-      <button class="dialog-close" id="cart-close" aria-label="Fechar" type="button">×</button>
-      <div class="dialog-content">
-        <span class="eyebrow">Seu pedido</span>
-        <h2>Revisar pedido</h2>
-        <div id="cart-items" class="cart-items"></div>
-        <div class="cart-total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
-        <button type="button" class="primary-btn full" id="send-order">Enviar pedido</button>
-      </div>
-    </div>
-  </dialog>
-
-  <script>
-    if (!new URLSearchParams(location.search).get("mesa")) {
-      const url = new URL(location.href);
-      url.searchParams.set("mesa", "1");
-      history.replaceState(null, "", url);
-    }
-    if (localStorage.getItem("mesaflow:data-version") !== "5") {
-      localStorage.removeItem("mesaflow:products");
-      localStorage.setItem("mesaflow:data-version", "5");
-    }
-  </script>
-  <script src="js/config.js?v=5"></script>
-  <script>window.MESAFLOW_CONFIG.restaurant.logo="assets/grao-icon.svg";</script>
-  <script src="js/app.js?v=5"></script>
-  <script src="js/v2.js?v=5"></script>
-  <script src="js/management.js?v=5"></script>
+  <div id="mf-root"></div>
+  <div id="mf-toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="mf-dialog" class="dialog mf-dialog"><div id="mf-dialog-body"></div></dialog>
+  <script src="js/config.js?v=6"></script>
+  <script src="js/boot-v6.js?v=6"></script>
 </body>
 </html>
