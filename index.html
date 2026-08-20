@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#074A43" />
+  <meta name="description" content="MesaFlow — cardápio digital, comanda e pedidos para pequenos bares e restaurantes." />
+  <title>MesaFlow — Cardápio & Pedidos</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="MesaFlow início">
+        <span class="brand-mark"><img id="brand-logo" alt="" /></span>
+        <span>
+          <strong id="brand-name">MesaFlow</strong>
+          <small id="brand-subtitle">Bar & Restaurante</small>
+        </span>
+      </a>
+      <div class="top-actions">
+        <span class="table-pill" id="table-pill" hidden>Mesa <b id="current-table-label">—</b></span>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Alternar tema">☾</button>
+      </div>
+    </header>
+
+    <nav class="role-nav" aria-label="Área do sistema">
+      <button class="role-tab is-active" data-role="cliente" type="button">Cliente</button>
+      <button class="role-tab" data-role="garcom" type="button">Garçom</button>
+      <button class="role-tab" data-role="copa" type="button">Copa</button>
+      <button class="role-tab" data-role="admin" type="button">Admin</button>
+    </nav>
+
+    <main id="app" class="main-content" aria-live="polite"></main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog id="product-dialog" class="dialog">
+    <form method="dialog" class="dialog-panel" id="product-form">
+      <button class="dialog-close" value="cancel" aria-label="Fechar" type="submit">×</button>
+      <div class="dialog-product-image" id="dialog-product-image"></div>
+      <div class="dialog-content">
+        <div class="eyebrow" id="dialog-category"></div>
+        <h2 id="dialog-title">Produto</h2>
+        <p id="dialog-description"></p>
+        <div class="dialog-price" id="dialog-price"></div>
+        <div id="modifier-groups" class="modifier-groups"></div>
+        <label class="field-label" for="item-note">Observação</label>
+        <input id="item-note" class="text-input" type="text" maxlength="80" placeholder="Ex.: pouco gelo" />
+        <div class="quantity-row">
+          <span>Quantidade</span>
+          <div class="stepper">
+            <button type="button" id="qty-minus">−</button>
+            <strong id="qty-value">1</strong>
+            <button type="button" id="qty-plus">+</button>
+          </div>
+        </div>
+        <button type="button" class="primary-btn full" id="add-to-cart">Adicionar ao pedido</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="cart-dialog" class="dialog">
+    <div class="dialog-panel cart-panel">
+      <button class="dialog-close" id="cart-close" aria-label="Fechar" type="button">×</button>
+      <div class="dialog-content">
+        <span class="eyebrow">Seu pedido</span>
+        <h2>Revisar pedido</h2>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-total"><span>Total</span><strong id="cart-total">R$ 0,00</strong></div>
+        <button type="button" class="primary-btn full" id="send-order">Enviar pedido</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
